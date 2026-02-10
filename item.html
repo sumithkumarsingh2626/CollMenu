@@ -15,13 +15,13 @@
 <!-- Hidden receipt for printing -->
 <div id="print-area" style="display:none">
     <h2>BABA Canteen</h2>
-    <p><strong>Item:</strong> <span id="itemName"></span></p>
-    <p><strong>Amount Paid:</strong> ₹<span id="itemPrice"></span></p>
-    <p><strong>Payment Status:</strong> SUCCESS</p>
+    <p><strong>Item:</strong> <span id="rItem"></span></p>
+    <p><strong>Amount Paid:</strong> ₹<span id="rPrice"></span></p>
+    <p><strong>Payment Method:</strong> <span id="rMethod"></span></p>
+    <p><strong>Status:</strong> SUCCESS</p>
     <hr>
     <p>Thank you! Visit Again</p>
 </div>
-
 
 <div class="container item-container">
 
@@ -34,23 +34,31 @@
     <hr style="margin:30px 0">
 
     <!-- Payment Section -->
-    <h3>Payment Options</h3>
+    <h3>Choose Payment Method</h3>
 
-    <p><strong>Cash:</strong> Pay at counter</p>
+    <div class="payment-buttons">
+        <button class="pay-option cash-btn" onclick="selectPayment('Cash')">
+            💵 Cash
+        </button>
 
-    <p><strong>UPI:</strong> Scan QR Code</p>
+        <button class="pay-option upi-btn" onclick="selectPayment('UPI')">
+            📱 UPI
+        </button>
+    </div>
 
-    <!-- QR Code -->
-    <img 
-        src="upi-qr.jpg"
-        class="qr-img"
-        onclick="openQR()"
-        alt="UPI QR Code"
-    >
-
-    <p style="font-size:14px;color:gray">
-        Click QR to view full size
-    </p>
+    <!-- QR Section -->
+    <div id="upi-section" style="display:none; margin-top:20px;">
+        <p>Scan UPI QR Code</p>
+        <img
+            src="upi-qr.jpg"
+            class="qr-img"
+            onclick="openQR()"
+            alt="UPI QR Code"
+        >
+        <p style="font-size:14px;color:gray">
+            Click QR to view full size
+        </p>
+    </div>
 
 </div>
 
@@ -65,6 +73,12 @@
     document.getElementById("itemPrice").textContent = "₹" + itemPrice;
     document.getElementById("itemImg").src = itemImg;
 
+    // receipt values
+    document.getElementById("rItem").textContent = itemName;
+    document.getElementById("rPrice").textContent = itemPrice;
+
+    let selectedPayment = null;
+
     function goBack() {
         window.location.href = "index.html";
     }
@@ -73,8 +87,24 @@
         window.location.href = "upi-qr.jpg";
     }
 
-    // ✅ PAYMENT → PRINT → RETURN TO MENU
+    function selectPayment(method) {
+        selectedPayment = method;
+        document.getElementById("rMethod").textContent = method;
+
+        if (method === "UPI") {
+            document.getElementById("upi-section").style.display = "block";
+        } else {
+            document.getElementById("upi-section").style.display = "none";
+        }
+    }
+
+    // PAYMENT → PRINT → RETURN TO MENU
     function proceedPayment() {
+        if (!selectedPayment) {
+            alert("Please select a payment method first.");
+            return;
+        }
+
         alert("Payment Successful!");
 
         const printArea = document.getElementById("print-area").innerHTML;
@@ -83,7 +113,6 @@
         document.body.innerHTML = printArea;
         window.print();
 
-        // Restore page & redirect
         document.body.innerHTML = originalPage;
 
         setTimeout(() => {
@@ -91,9 +120,6 @@
         }, 500);
     }
 </script>
-
-
-
 
 </body>
 </html>
