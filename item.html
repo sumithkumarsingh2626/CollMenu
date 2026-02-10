@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Item Details</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+<!-- Top Buttons -->
+<button class="top-btn back-btn" onclick="goBack()">⬅ Back</button>
+<button class="top-btn proceed-btn" onclick="proceedPayment()">Proceed ▶</button>
+
+<!-- Hidden receipt for printing -->
+<div id="print-area" style="display:none">
+    <h2>BABA Canteen</h2>
+    <p><strong>Item:</strong> <span id="itemName"></span></p>
+    <p><strong>Amount Paid:</strong> ₹<span id="itemPrice"></span></p>
+    <p><strong>Payment Status:</strong> SUCCESS</p>
+    <hr>
+    <p>Thank you! Visit Again</p>
+</div>
+
+
+<div class="container item-container">
+
+    <!-- Item Details -->
+    <img id="itemImg" class="item-img"><br><br>
+
+    <h2 id="itemName"></h2>
+    <h3 id="itemPrice"></h3>
+
+    <hr style="margin:30px 0">
+
+    <!-- Payment Section -->
+    <h3>Payment Options</h3>
+
+    <p><strong>Cash:</strong> Pay at counter</p>
+
+    <p><strong>UPI:</strong> Scan QR Code</p>
+
+    <!-- QR Code -->
+    <img 
+        src="upi-qr.jpg"
+        class="qr-img"
+        onclick="openQR()"
+        alt="UPI QR Code"
+    >
+
+    <p style="font-size:14px;color:gray">
+        Click QR to view full size
+    </p>
+
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+
+    const itemName = params.get("name");
+    const itemPrice = params.get("price");
+    const itemImg = params.get("img");
+
+    document.getElementById("itemName").textContent = itemName;
+    document.getElementById("itemPrice").textContent = "₹" + itemPrice;
+    document.getElementById("itemImg").src = itemImg;
+
+    function goBack() {
+        window.location.href = "index.html";
+    }
+
+    function openQR() {
+        window.location.href = "upi-qr.jpg";
+    }
+
+    // ✅ PAYMENT → PRINT → RETURN TO MENU
+    function proceedPayment() {
+        alert("Payment Successful!");
+
+        const printArea = document.getElementById("print-area").innerHTML;
+        const originalPage = document.body.innerHTML;
+
+        document.body.innerHTML = printArea;
+        window.print();
+
+        // Restore page & redirect
+        document.body.innerHTML = originalPage;
+
+        setTimeout(() => {
+            window.location.href = "index.html";
+        }, 500);
+    }
+</script>
+
+
+
+
+</body>
+</html>
