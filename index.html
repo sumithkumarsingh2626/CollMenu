@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>BABA Canteen - Cinematic Menu</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BABA Canteen - Full Menu</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
     <!-- External CSS -->
     <link rel="stylesheet" href="./style.css">
@@ -11,11 +14,14 @@
 
 <body>
 
-<header>
-    <h1>BABA Canteen</h1>
-    <p>Delicious food at your fingertips</p>
+<!-- ===== SMALL HEADER ===== -->
+<header class="hero">
+    <div class="hero-overlay">
+        <h1>BABA Canteen</h1>
+    </div>
 </header>
 
+<!-- ===== NAVIGATION ===== -->
 <nav>
     <a href="#breakfast">Breakfast</a>
     <a href="#lunch">Lunch</a>
@@ -24,135 +30,143 @@
     <a href="#chocolates">Chocolates</a>
 </nav>
 
+<!-- ===== MAIN CONTENT ===== -->
 <div class="container">
 
     <!-- Breakfast -->
     <h2 id="breakfast">Breakfast</h2>
     <div class="menu-section">
-  
-        <div class="menu-item"onclick="openItem('puri','40','Images/puri.png')"> 
-    <img src="Images/puri.png"> 
-            <p>puri – ₹35</p>
-</div>
 
-        <div class="menu-item"onclick="openItem('masaladosa','40','Images/masaladosa.png')"> 
-    <img src="Images/masaladosa.png"> 
+        <div class="menu-item" onclick="openItem('Puri','35','Images/puri.png')">
+            <img src="Images/puri.png" alt="Puri">
+            <p>Puri – ₹35</p>
+        </div>
+
+        <div class="menu-item" onclick="openItem('Masala Dosa','40','Images/masaladosa.png')">
+            <img src="Images/masaladosa.png" alt="Masala Dosa">
             <p>Masala Dosa – ₹40</p>
-</div>
+        </div>
 
-  
-        <div class="menu-item"
-     onclick="openItem('bonda2','35','Images/bonda2.webp')"> 
-    <img src="Images/bonda2.webp"> 
-        <p>Bonda – ₹30</p>
-</div>
+        <div class="menu-item" onclick="openItem('Bonda','30','Images/bonda2.webp')">
+            <img src="Images/bonda2.webp" alt="Bonda">
+            <p>Bonda – ₹30</p>
+        </div>
 
-
-        <div class="menu-item"onclick="openItem('paper-dosa','35','Images/paper-dosa.png')"> 
-    <img src="Images/paper-dosa.png"> 
+        <div class="menu-item" onclick="openItem('Paper Dosa','35','Images/paper-dosa.png')">
+            <img src="Images/paper-dosa.png" alt="Paper Dosa">
             <p>Paper Dosa – ₹35</p>
-</div>
+        </div>
+
     </div>
 
     <!-- Lunch -->
     <h2 id="lunch">Lunch</h2>
     <div class="menu-section">
+
         <div class="menu-item" onclick="openItem('Paratha','30','paratha.jpg')">
-            <img src="paratha.jpg">
+            <img src="paratha.jpg" alt="Paratha">
             <p>Paratha – ₹30</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Chapathi','35','chapathi.jpg')">
-            <img src="chapathi.jpg">
+            <img src="chapathi.jpg" alt="Chapathi">
             <p>Chapathi – ₹35</p>
         </div>
+
     </div>
 
     <!-- Snacks -->
     <h2 id="snacks">Snacks</h2>
     <div class="menu-section">
+
         <div class="menu-item" onclick="openItem('Punugulu','20','http://surl.li/envfpl')">
-            <img src="http://surl.li/envfpl">
+            <img src="http://surl.li/envfpl" alt="Punugulu">
             <p>Punugulu – ₹20</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Mirchi Bajji','15','http://surl.li/ivybyd')">
-            <img src="http://surl.li/ivybyd">
+            <img src="http://surl.li/ivybyd" alt="Mirchi Bajji">
             <p>Mirchi Bajji – ₹15</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Samosa','15','http://surl.li/tomlag')">
-            <img src="http://surl.li/tomlag">
+            <img src="http://surl.li/tomlag" alt="Samosa">
             <p>Samosa – ₹15</p>
         </div>
+
     </div>
 
     <!-- Drinks -->
     <h2 id="drinks">Drinks</h2>
     <div class="menu-section">
+
         <div class="menu-item" onclick="openItem('Sprite','20','http://surl.li/ywvkng')">
-            <img src="http://surl.li/ywvkng">
+            <img src="http://surl.li/ywvkng" alt="Sprite">
             <p>Sprite – ₹20</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Thums Up','20','http://surl.li/zenlkh')">
-            <img src="http://surl.li/zenlkh">
+            <img src="http://surl.li/zenlkh" alt="Thums Up">
             <p>Thums Up – ₹20</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Coca Cola','20','http://surl.li/yzxcac')">
-            <img src="http://surl.li/yzxcac">
+            <img src="http://surl.li/yzxcac" alt="Coca Cola">
             <p>Coca Cola – ₹20</p>
         </div>
+
     </div>
 
     <!-- Chocolates -->
     <h2 id="chocolates">Chocolates</h2>
     <div class="menu-section">
+
         <div class="menu-item" onclick="openItem('Dairy Milk','10','http://surl.li/ovpsep')">
-            <img src="http://surl.li/ovpsep">
+            <img src="http://surl.li/ovpsep" alt="Dairy Milk">
             <p>Dairy Milk – ₹10</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Dairy Milk','40','http://surl.li/fgdfeg')">
-            <img src="http://surl.li/fgdfeg">
+            <img src="http://surl.li/fgdfeg" alt="Dairy Milk">
             <p>Dairy Milk – ₹40</p>
         </div>
 
         <div class="menu-item" onclick="openItem('KitKat','10','http://surl.li/fvrhty')">
-            <img src="http://surl.li/fvrhty">
+            <img src="http://surl.li/fvrhty" alt="KitKat">
             <p>KitKat – ₹10</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Snickers','10','http://surl.li/sutodr')">
-            <img src="http://surl.li/sutodr">
+            <img src="http://surl.li/sutodr" alt="Snickers">
             <p>Snickers – ₹10</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Munch','5','http://surl.li/vyxbei')">
-            <img src="http://surl.li/vyxbei">
+            <img src="http://surl.li/vyxbei" alt="Munch">
             <p>Munch – ₹5</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Perk','5','http://surl.li/mgtmwg')">
-            <img src="http://surl.li/mgtmwg">
+            <img src="http://surl.li/mgtmwg" alt="Perk">
             <p>Perk – ₹5</p>
         </div>
 
         <div class="menu-item" onclick="openItem('Oreo','10','http://surl.li/ddamvd')">
-            <img src="http://surl.li/ddamvd">
+            <img src="http://surl.li/ddamvd" alt="Oreo">
             <p>Oreo – ₹10</p>
         </div>
+
     </div>
 
 </div>
 
+<!-- ===== FOOTER ===== -->
 <footer>
     <p>© 2024 BABA Canteen | All Rights Reserved</p>
 </footer>
 
 <!-- External JS -->
 <script src="./script.js"></script>
+
 </body>
 </html>
-
