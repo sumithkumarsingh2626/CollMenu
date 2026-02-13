@@ -2,17 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Item Details</title>
+    <title>Item Details - BABA Canteen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="./style.css">
 </head>
 
-<body>
+<body class="item-page">
 
 <!-- Top Buttons -->
 <button class="top-btn back-btn" onclick="goBack()">⬅ Back</button>
 <button class="top-btn proceed-btn" onclick="proceedPayment()">Proceed ▶</button>
 
-<!-- Hidden receipt for printing -->
+<!-- Hidden receipt -->
 <div id="print-area" style="display:none">
     <h2>BABA Canteen</h2>
     <p><strong>Item:</strong> <span id="rItem"></span></p>
@@ -23,41 +25,35 @@
     <p>Thank you! Visit Again</p>
 </div>
 
-<div class="container item-container">
+<!-- 3D Item Card -->
+<div class="item-3d-wrapper">
 
-    <!-- Item Details -->
-    <img id="itemImg" class="item-img"><br><br>
+    <div class="item-card">
 
-    <h2 id="itemName"></h2>
-    <h3 id="itemPrice"></h3>
+        <img id="itemImg" class="item-img">
 
-    <hr style="margin:30px 0">
+        <h2 id="itemName"></h2>
+        <h3 id="itemPrice"></h3>
 
-    <!-- Payment Section -->
-    <h3>Choose Payment Method</h3>
+        <hr>
 
-    <div class="payment-buttons">
-        <button class="pay-option cash-btn" onclick="selectPayment('Cash')">
-            💵 Cash
-        </button>
+        <h3>Choose Payment Method</h3>
 
-        <button class="pay-option upi-btn" onclick="selectPayment('UPI')">
-            📱 UPI
-        </button>
-    </div>
+        <div class="payment-buttons">
+            <button class="pay-option cash-btn" onclick="selectPayment('Cash')">
+                💵 Cash
+            </button>
 
-    <!-- QR Section -->
-    <div id="upi-section" style="display:none; margin-top:20px;">
-        <p>Scan UPI QR Code</p>
-        <img
-            src="upi-qr.jpg"
-            class="qr-img"
-            onclick="openQR()"
-            alt="UPI QR Code"
-        >
-        <p style="font-size:14px;color:gray">
-            Click QR to view full size
-        </p>
+            <button class="pay-option upi-btn" onclick="selectPayment('UPI')">
+                📱 UPI
+            </button>
+        </div>
+
+        <div id="upi-section" class="upi-box" style="display:none;">
+            <p>Scan UPI QR Code</p>
+            <img src="upi-qr.jpg" class="qr-img" onclick="openQR()">
+        </div>
+
     </div>
 
 </div>
@@ -73,7 +69,6 @@
     document.getElementById("itemPrice").textContent = "₹" + itemPrice;
     document.getElementById("itemImg").src = itemImg;
 
-    // receipt values
     document.getElementById("rItem").textContent = itemName;
     document.getElementById("rPrice").textContent = itemPrice;
 
@@ -98,10 +93,9 @@
         }
     }
 
-    // PAYMENT → PRINT → RETURN TO MENU
     function proceedPayment() {
         if (!selectedPayment) {
-            alert("Please select a payment method first.");
+            alert("Please select payment method first.");
             return;
         }
 
@@ -112,13 +106,22 @@
 
         document.body.innerHTML = printArea;
         window.print();
-
         document.body.innerHTML = originalPage;
 
         setTimeout(() => {
             window.location.href = "index.html";
         }, 500);
     }
+
+    /* 3D Mouse Tilt Effect */
+    const card = document.querySelector(".item-card");
+
+    document.addEventListener("mousemove", (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 10;
+        const y = (e.clientY / window.innerHeight - 0.5) * 10;
+
+        card.style.transform = `rotateX(${-y}deg) rotateY(${x}deg)`;
+    });
 </script>
 
 </body>
