@@ -1,4 +1,4 @@
-/* General reset */
+/* ===== RESET ===== */
 * {
     margin: 0;
     padding: 0;
@@ -7,19 +7,28 @@
 }
 
 body {
-    background: #f3f4f6;
-    color: #333;
-}
-
-/* Header */
-header {
-    background: linear-gradient(90deg, #e63946, #f77f00);
+    background: radial-gradient(circle at top, #1a1a1a, #0d0d0d);
     color: #fff;
-    text-align: center;
-    padding: 20px;
+    perspective: 1200px;
 }
 
-/* Nav */
+/* ===== SMALL HEADER (~1.5cm) ===== */
+header {
+    height: 60px;
+    background: linear-gradient(90deg, #e63946, #f77f00);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+header p {
+    display: none;
+}
+
+/* ===== NAV ===== */
 nav {
     display: flex;
     justify-content: center;
@@ -31,142 +40,116 @@ nav a {
     color: white;
     text-decoration: none;
     margin: 0 15px;
+    transition: color 0.3s ease;
 }
 
 nav a:hover {
-    color: #333;
+    color: #000;
 }
 
-/* Layout */
+/* ===== LAYOUT ===== */
 .container {
     max-width: 1200px;
-    margin: 30px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
+    margin: 40px auto;
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
 }
 
 h2 {
-    margin: 30px 0 15px;
-    color: #e63946;
+    margin: 30px 0 20px;
+    color: #f77f00;
+    border-left: 4px solid #e63946;
+    padding-left: 10px;
 }
 
-/* Menu grid */
+/* ===== MENU GRID ===== */
 .menu-section {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    gap: 25px;
+    perspective: 1000px;
 }
 
-/* Animation base */
+/* ===== MENU CARD ===== */
 .menu-item {
-    background: #f8f9fa;
+    background: linear-gradient(145deg, #1f1f1f, #141414);
     border-radius: 15px;
     padding: 20px;
     text-align: center;
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.6s ease,
-                transform 0.6s ease,
-                box-shadow 0.3s ease,
-                background 0.3s ease;
+    transition: 
+        opacity 0.6s ease,
+        transform 0.6s ease,
+        box-shadow 0.4s ease,
+        background 0.3s ease;
+    transform-style: preserve-3d;
 }
 
-/* Animation trigger */
+/* Reveal */
 .menu-item.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-.menu-item img {
-    width: 105px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-    transition: transform 0.3s ease;
+/* 3D Hover */
+.menu-item:hover {
+    transform: rotateX(8deg) rotateY(10deg) scale(1.05);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+    background: linear-gradient(145deg, #a02577, #6b1b50);
+    cursor: pointer;
 }
 
-/* Hover and Active Effects */
-.menu-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    background: #a02577;
-    cursor: pointer;
+.menu-item img {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin-bottom: 12px;
+    transition: transform 0.4s ease;
 }
 
 .menu-item:hover img {
-    transform: scale(1.2);
+    transform: scale(1.15);
 }
 
-/* Active effect */
+/* Active */
 .menu-item:active {
     transform: scale(1.02);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    background: #555555;
 }
 
-/* Footer */
+/* ===== FOOTER ===== */
 footer {
-    background: #e63946;
-    color: white;
+    background: #111;
     text-align: center;
     padding: 20px;
-    margin-top: 30px;
-}
-.pay-btn {
-    padding: 12px 25px;
-    margin: 10px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background: #e63946;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
+    margin-top: 40px;
+    color: #aaa;
 }
 
-.pay-btn:hover {
-    background: #a02577;
+/* ===== ITEM PAGE ===== */
+.item-container {
+    margin-top: 100px;
+    text-align: center;
 }
-/* Item page image */
+
+/* 3D Item Card */
+.item-page {
+    background: radial-gradient(circle, #111, #000);
+}
+
 .item-img {
     width: 150px;
     border-radius: 50%;
+    transition: transform 0.4s ease;
 }
 
-/* QR Code */
-.qr-img {
-    width: 180px;
-    margin-top: 15px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+.item-img:hover {
+    transform: scale(1.1);
 }
 
-.qr-img:hover {
-    transform: scale(1.05);
-}
-
-/* Back Button */
-.back-btn {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 6px;
-    background: #e63946;
-    color: white;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.back-btn:hover {
-    background: #a02577;
-}
-/* Item page container spacing */
-.item-container {
-    margin-top: 80px;
-    text-align: center;
-}
-
-/* Top buttons common */
+/* ===== TOP BUTTONS ===== */
 .top-btn {
     position: fixed;
     top: 15px;
@@ -178,7 +161,6 @@ footer {
     z-index: 1000;
 }
 
-/* Back button – top left */
 .back-btn {
     left: 15px;
     background: #555;
@@ -189,7 +171,6 @@ footer {
     background: #333;
 }
 
-/* Proceed button – top right */
 .proceed-btn {
     right: 15px;
     background: #28a745;
@@ -200,25 +181,7 @@ footer {
     background: #1e7e34;
 }
 
-/* Item image */
-.item-img {
-    width: 150px;
-    border-radius: 50%;
-}
-
-/* QR image */
-.qr-img {
-    width: 180px;
-    margin-top: 15px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.qr-img:hover {
-    transform: scale(1.05);
-}
-
-/* Payment buttons container */
+/* ===== PAYMENT BUTTONS ===== */
 .payment-buttons {
     display: flex;
     justify-content: center;
@@ -226,7 +189,6 @@ footer {
     margin-top: 20px;
 }
 
-/* Common payment button */
 .pay-option {
     padding: 14px 22px;
     font-size: 16px;
@@ -238,7 +200,6 @@ footer {
                 background 0.3s ease;
 }
 
-/* Cash button */
 .cash-btn {
     background: #6c757d;
     color: white;
@@ -246,11 +207,10 @@ footer {
 
 .cash-btn:hover {
     background: #495057;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-/* UPI button */
 .upi-btn {
     background: #28a745;
     color: white;
@@ -258,6 +218,18 @@ footer {
 
 .upi-btn:hover {
     background: #1e7e34;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* ===== QR ===== */
+.qr-img {
+    width: 180px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.qr-img:hover {
+    transform: scale(1.05);
 }
