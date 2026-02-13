@@ -127,13 +127,6 @@ footer {
     margin-top: 40px;
     color: #aaa;
 }
-
-/* ===== ITEM PAGE ===== */
-.item-container {
-    margin-top: 100px;
-    text-align: center;
-}
-
 /* 3D Item Card */
 .item-page {
     background: radial-gradient(circle, #111, #000);
@@ -229,7 +222,33 @@ footer {
     cursor: pointer;
     transition: transform 0.3s ease;
 }
+/* ===== CENTER ITEM PAGE PROPERLY ===== */
 
+.item-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, #111, #000);
+}
+
+/* 3D centered card */
+.item-container {
+    background: #1a1a1a;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: center;
+    width: 350px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+}
+
+/* Optional subtle floating effect */
+.item-container:hover {
+    transform: translateY(-5px);
+}
 .qr-img:hover {
     transform: scale(1.05);
 }
+
