@@ -1,0 +1,16 @@
+<svg width="320" height="240" viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="320" height="240" rx="32" fill="url(#paint0_linear_1_2)"/>
+  <circle cx="86" cy="54" r="44" fill="white" fill-opacity="0.15"/>
+  <circle cx="262" cy="198" r="56" fill="white" fill-opacity="0.12"/>
+  <path d="M96 138C96 114.804 114.804 96 138 96H182C205.196 96 224 114.804 224 138C224 161.196 205.196 180 182 180H138C114.804 180 96 161.196 96 138Z" fill="white" fill-opacity="0.92"/>
+  <path d="M118 128H202" stroke="#FF6B35" stroke-width="8" stroke-linecap="round"/>
+  <path d="M132 104C132 95.1634 139.163 88 148 88V88C156.837 88 164 95.1634 164 104V118H132V104Z" fill="white" fill-opacity="0.86"/>
+  <path d="M164 104C164 95.1634 171.163 88 180 88V88C188.837 88 196 95.1634 196 104V118H164V104Z" fill="white" fill-opacity="0.86"/>
+  <text x="160" y="213" text-anchor="middle" fill="#0F172A" fill-opacity="0.62" font-family="Arial, sans-serif" font-size="18">Freshly served at CollMenu</text>
+  <defs>
+    <linearGradient id="paint0_linear_1_2" x1="20" y1="14" x2="300" y2="224" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE1CF"/>
+      <stop offset="1" stop-color="#EAF1FF"/>
+    </linearGradient>
+  </defs>
+</svg>

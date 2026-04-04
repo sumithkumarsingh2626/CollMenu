@@ -2,127 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Item Details - BABA Canteen</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="./style.css">
+    <meta http-equiv="refresh" content="0; url=./index.html">
+    <title>Redirecting to CollMenu</title>
+    <link rel="stylesheet" href="./styles/main.css">
 </head>
-
-<body class="item-page">
-
-<!-- Top Buttons -->
-<button class="top-btn back-btn" onclick="goBack()">⬅ Back</button>
-<button class="top-btn proceed-btn" onclick="proceedPayment()">Proceed ▶</button>
-
-<!-- Hidden receipt -->
-<div id="print-area" style="display:none">
-    <h2>BABA Canteen</h2>
-    <p><strong>Item:</strong> <span id="rItem"></span></p>
-    <p><strong>Amount Paid:</strong> ₹<span id="rPrice"></span></p>
-    <p><strong>Payment Method:</strong> <span id="rMethod"></span></p>
-    <p><strong>Status:</strong> SUCCESS</p>
-    <hr>
-    <p>Thank you! Visit Again</p>
-</div>
-
-<!-- 3D Item Card -->
-<div class="item-3d-wrapper">
-
-    <div class="item-card">
-
-        <img id="itemImg" class="item-img">
-
-        <h2 id="itemName"></h2>
-        <h3 id="itemPrice"></h3>
-
-        <hr>
-
-        <h3>Choose Payment Method</h3>
-
-        <div class="payment-buttons">
-            <button class="pay-option cash-btn" onclick="selectPayment('Cash')">
-                💵 Cash
-            </button>
-
-            <button class="pay-option upi-btn" onclick="selectPayment('UPI')">
-                📱 UPI
-            </button>
-        </div>
-
-        <div id="upi-section" class="upi-box" style="display:none;">
-            <p>Scan UPI QR Code</p>
-            <img src="upi-qr.jpg" class="qr-img" onclick="openQR()">
-        </div>
-
-    </div>
-
-</div>
-
-<script>
-    const params = new URLSearchParams(window.location.search);
-
-    const itemName = params.get("name");
-    const itemPrice = params.get("price");
-    const itemImg = params.get("img");
-
-    document.getElementById("itemName").textContent = itemName;
-    document.getElementById("itemPrice").textContent = "₹" + itemPrice;
-    document.getElementById("itemImg").src = itemImg;
-
-    document.getElementById("rItem").textContent = itemName;
-    document.getElementById("rPrice").textContent = itemPrice;
-
-    let selectedPayment = null;
-
-    function goBack() {
-        window.location.href = "index.html";
-    }
-
-    function openQR() {
-        window.location.href = "upi-qr.jpg";
-    }
-
-    function selectPayment(method) {
-        selectedPayment = method;
-        document.getElementById("rMethod").textContent = method;
-
-        if (method === "UPI") {
-            document.getElementById("upi-section").style.display = "block";
-        } else {
-            document.getElementById("upi-section").style.display = "none";
-        }
-    }
-
-    function proceedPayment() {
-        if (!selectedPayment) {
-            alert("Please select payment method first.");
-            return;
-        }
-
-        alert("Payment Successful!");
-
-        const printArea = document.getElementById("print-area").innerHTML;
-        const originalPage = document.body.innerHTML;
-
-        document.body.innerHTML = printArea;
-        window.print();
-        document.body.innerHTML = originalPage;
-
-        setTimeout(() => {
-            window.location.href = "index.html";
-        }, 500);
-    }
-
-    /* 3D Mouse Tilt Effect */
-    const card = document.querySelector(".item-card");
-
-    document.addEventListener("mousemove", (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 10;
-        const y = (e.clientY / window.innerHeight - 0.5) * 10;
-
-        card.style.transform = `rotateX(${-y}deg) rotateY(${x}deg)`;
-    });
-</script>
-
+<body class="redirect-page">
+    <main class="redirect-card">
+        <img src="./assets/logo-mark.svg" alt="CollMenu logo" class="redirect-logo">
+        <p class="redirect-label">CollMenu</p>
+        <h1>Your updated ordering experience is loading.</h1>
+        <p>
+            This page has moved into the main app shell.
+            <a href="./index.html">Open the homepage</a>.
+        </p>
+    </main>
+    <script>
+        window.location.replace("./index.html");
+    </script>
 </body>
 </html>
