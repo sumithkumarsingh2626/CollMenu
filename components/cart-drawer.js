@@ -1,112 +1,88 @@
-import { icons } from "./icons.js";
-import { formatCurrency } from "../utils/app-utils.js";
-
-function createCartItem(item) {
+function createCartItemsMarkup(cartItems) {
+  if (!cartItems.length) {
     return `
-        <article class="cart-item">
-            <img src="${item.image}" alt="${item.name}" loading="lazy" data-fallback="./assets/placeholder-food.svg">
-
-            <div class="cart-item-copy">
-                <div class="cart-item-top">
-                    <div>
-                        <h3>${item.name}</h3>
-                        <p>${item.category}</p>
-                    </div>
-
-                    <button
-                        type="button"
-                        class="ghost-icon danger"
-                        aria-label="Remove ${item.name}"
-                        data-action="remove-item"
-                        data-item-id="${item.id}"
-                    >
-                        ${icons.trash}
-                    </button>
-                </div>
-
-                <div class="cart-item-bottom">
-                    <div class="stepper">
-                        <button type="button" class="ghost-icon" data-action="decrease-item" data-item-id="${item.id}">
-                            ${icons.minus}
-                        </button>
-                        <span>${item.quantity}</span>
-                        <button type="button" class="ghost-icon" data-action="increase-item" data-item-id="${item.id}">
-                            ${icons.plus}
-                        </button>
-                    </div>
-
-                    <strong>${formatCurrency(item.lineTotal)}</strong>
-                </div>
-            </div>
-        </article>
+      <div class="cart-empty-state">
+        <h3>Your cart is empty</h3>
+        <p>Add a few favourites from Baba Canteen to get started.</p>
+      </div>
     `;
+  }
+
+  return cartItems
+    .map(
+      (item) => `
+        <article class="cart-item">
+          <img class="cart-item__image" src="${item.image}" alt="${item.name}" loading="lazy" />
+          <div class="cart-item__content">
+            <div class="cart-item__header">
+              <div>
+                <h3>${item.name}</h3>
+                <p>${item.category}</p>
+              </div>
+              <strong>₹${item.price * item.quantity}</strong>
+            </div>
+
+            <div class="cart-item__footer">
+              <div class="quantity-control" aria-label="Quantity controls">
+                <button type="button" data-action="decrease-quantity" data-item-id="${item.id}" aria-label="Decrease quantity">−</button>
+                <span>${item.quantity}</span>
+                <button type="button" data-action="increase-quantity" data-item-id="${item.id}" aria-label="Increase quantity">+</button>
+              </div>
+
+              <button
+                class="cart-item__remove"
+                type="button"
+                data-action="remove-from-cart"
+                data-item-id="${item.id}"
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        </article>
+      `
+    )
+    .join('');
 }
 
-export function createCartDrawer({ isOpen, cartItems, totalItems, subtotal, serviceFee, taxes, total, isProcessing }) {
-    return `
-        <div class="drawer-overlay ${isOpen ? "is-open" : ""}" data-action="close-cart"></div>
-
-        <aside class="cart-drawer ${isOpen ? "is-open" : ""}" aria-hidden="${!isOpen}">
-            <div class="drawer-header">
-                <div>
-                    <p class="drawer-label">Your cart</p>
-                    <h2>${totalItems} item${totalItems === 1 ? "" : "s"} ready</h2>
-                </div>
-                <button type="button" class="icon-button" aria-label="Close cart" data-action="close-cart">
-                    ${icons.close}
-                </button>
-            </div>
-
-            <div class="drawer-body">
-                ${cartItems.length
-                    ? `
-                        <div class="cart-list">
-                            ${cartItems.map((item) => createCartItem(item)).join("")}
-                        </div>
-                      `
-                    : `
-                        <div class="empty-cart">
-                            <img src="./assets/placeholder-food.svg" alt="Empty cart">
-                            <h3>Your cart is still empty.</h3>
-                            <p>Add a few campus favorites to see quantity controls and live totals here.</p>
-                            <button type="button" class="button-secondary" data-action="close-cart">
-                                Browse dishes
-                            </button>
-                        </div>
-                      `}
-            </div>
-
-            <div class="drawer-footer">
-                <div class="summary-grid">
-                    <div class="summary-row">
-                        <span>Subtotal</span>
-                        <strong>${formatCurrency(subtotal)}</strong>
-                    </div>
-                    <div class="summary-row">
-                        <span>Packaging</span>
-                        <strong>${formatCurrency(serviceFee)}</strong>
-                    </div>
-                    <div class="summary-row">
-                        <span>Taxes</span>
-                        <strong>${formatCurrency(taxes)}</strong>
-                    </div>
-                    <div class="summary-row total">
-                        <span>Total</span>
-                        <strong>${formatCurrency(total)}</strong>
-                    </div>
-                </div>
-
-                <p class="drawer-note">Campus pickup only · Estimated ready time 12-15 minutes.</p>
-
-                <button
-                    type="button"
-                    class="checkout-button ${isProcessing ? "is-loading" : ""}"
-                    data-action="checkout"
-                    ${cartItems.length === 0 || isProcessing ? "disabled" : ""}
-                >
-                    ${isProcessing ? "Placing order..." : "Place order"}
-                </button>
-            </div>
-        </aside>
-    `;
+export function createCartDrawer({
+  cartItems = [],
+  totalItems = 0,
+  subtotal = 0,
+  isOpen = false
+} = {}) {
+  return `
+    <div class="bottom-sheet cart-sheet${isOpen ? ' open' : ''}" role="dialog" aria-modal="true" aria-label="Shopping cart">
+      <div class="sheet-handle">
+        <div class="handle-bar"></div>
+      </div>
+      <header class="sheet-header">
+        <div>
+          <span>Your Order</span>
+          <h2>Cart (${totalItems})</h2>
+        </div>
+        <button class="icon-btn" data-action="close-cart" aria-label="Close">×</button>
+      </header>
+      <div class="sheet-body">
+        ${createCartItemsMarkup(cartItems)}
+      </div>
+      <footer class="sheet-footer">
+        <div class="summary-grid">
+          <span>Subtotal</span><strong>₹${subtotal}</strong>
+          <span>Packaging</span><strong>₹12</strong>
+          <span>Tax</span><strong>₹${Math.round(subtotal * 0.05)}</strong>
+          <div class="total-row">
+            <strong>Total</strong><strong>₹${Math.round(subtotal * 1.05 + 12)}</strong>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-full" data-action="place-order"${cartItems.length ? '' : ' disabled'}>
+          Place Order
+        </button>
+        <div class="upi-preview">
+          <img src="../upi-qr.jpg" alt="UPI QR - Scan to pay" />
+          <p>Or scan UPI QR at pickup</p>
+        </div>
+      </footer>
+    </div>
+  `;
 }

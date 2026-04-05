@@ -9,12 +9,13 @@ import { errorHandler } from "./middlewares/errorHandler.js";
 import { notFound } from "./middlewares/notFound.js";
 import cartRoutes from "./routes/cartRoutes.js";
 import menuRoutes from "./routes/menuRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
-const apiPrefixes = ["/menu", "/cart", "/order", "/health"];
+const apiPrefixes = ["/menu", "/cart", "/order", "/health", "/admin"];
 
 function resolveCorsOrigin() {
     if (!env.corsOrigin || env.corsOrigin === "*") {
@@ -44,6 +45,7 @@ app.use(express.static(__dirname));
 app.use("/menu", menuRoutes);
 app.use("/cart", cartRoutes);
 app.use("/order", orderRoutes);
+app.use("/admin", adminRoutes);
 
 app.get("*", (request, response, next) => {
     const isApiRequest = apiPrefixes.some((prefix) => request.path === prefix || request.path.startsWith(`${prefix}/`));

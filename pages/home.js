@@ -1,3 +1,4 @@
+import { createBlockCard } from "../components/block-card.js";
 import { featuredItemIds, categories, menuItems } from "../assets/data/menu-items.js";
 import { createCartDrawer } from "../components/cart-drawer.js";
 import { createFooter } from "../components/footer.js";
@@ -318,6 +319,10 @@ export function initializeHomePage(root) {
             case "add-to-cart":
                 addToCart(itemId);
                 break;
+            case "theme-toggle":
+                document.body.classList.toggle('dark');
+                localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+                break;
             case "checkout":
                 handleCheckout();
                 break;
@@ -325,26 +330,27 @@ export function initializeHomePage(root) {
                 state.isCartOpen = false;
                 renderCart();
                 break;
-            case "decrease-item": {
+            case "decrease-quantity":
+            case "decrease-item":
                 const currentItem = state.cart.find((item) => item.id === itemId);
                 if (currentItem) {
                     updateCart(itemId, currentItem.quantity - 1);
                 }
                 break;
-            }
-            case "increase-item": {
-                const currentItem = state.cart.find((item) => item.id === itemId);
-                if (currentItem) {
-                    updateCart(itemId, currentItem.quantity + 1);
+            case "increase-quantity":
+            case "increase-item":
+                const currentItem2 = state.cart.find((item) => item.id === itemId);
+                if (currentItem2) {
+                    updateCart(itemId, currentItem2.quantity + 1);
                 }
                 break;
-            }
             case "open-cart":
                 state.isCartOpen = true;
                 state.isMenuOpen = false;
                 renderNavbar();
                 renderCart();
                 break;
+            case "remove-from-cart":
             case "remove-item":
                 updateCart(itemId, 0);
                 break;
@@ -363,6 +369,10 @@ export function initializeHomePage(root) {
                 state.isMenuOpen = false;
                 renderNavbar();
                 window.scrollTo({ top: 0, behavior: "smooth" });
+                break;
+            case "search-menu":
+                state.query = category ?? '';
+                renderMenu({ preserveSearchFocus: true });
                 break;
             case "set-category":
                 state.activeCategory = category ?? "All";

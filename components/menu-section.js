@@ -1,134 +1,125 @@
-import { icons } from "./icons.js";
-import { formatCurrency } from "../utils/app-utils.js";
+export function createMenuSection({
+  items = [],
+  categories = [],
+  activeCategory = 'All',
+  searchTerm = '',
+  featuredItems = []
+} = {}) {
+  const categoryMarkup = categories
+    .map(
+      (category) => `
+        <button
+          class="menu-pill${category === activeCategory ? ' is-active' : ''}"
+          type="button"
+          data-action="set-category"
+          data-category="${category}"
+        >
+          ${category}
+        </button>
+      `
+    )
+    .join('');
 
-function createSkeletonCards() {
-    return Array.from({ length: 8 }, () => `
-        <article class="menu-card skeleton-card">
-            <div class="skeleton shimmer media-skeleton"></div>
-            <div class="skeleton shimmer title-skeleton"></div>
-            <div class="skeleton shimmer text-skeleton"></div>
-            <div class="skeleton shimmer text-skeleton short"></div>
-            <div class="skeleton shimmer footer-skeleton"></div>
+  const specialsMarkup = featuredItems
+    .map((item) => {
+      // Inline block-card for non-import
+      return `
+        <article class="menu-block block-card magnetic special-block" data-item-id="${item.id}" data-action="add-to-cart">
+          ${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy" />` : ''}
+          <div class="block-content">
+            <div class="block-meta">
+              <span class="category-chip">⭐ Special</span>
+              <kbd class="price-mono">₹${item.price}</kbd>
+            </div>
+            <h3 class="block-title">${item.name}</h3>
+            <p class="block-desc">${item.description}</p>
+            <div class="block-actions">
+              <button class="btn btn-primary btn-small">Quick Add</button>
+            </div>
+          </div>
         </article>
-    `).join("");
-}
+      `;
+    })
+    .join('');
 
-function createEmptyState() {
-    return `
-        <div class="empty-state" data-reveal>
-            <img src="./assets/placeholder-food.svg" alt="No items found">
-            <h3>No dishes match your search yet.</h3>
-            <p>Try another keyword or reset the filters to see the full canteen menu.</p>
-            <button type="button" class="button-secondary" data-action="reset-filters">
-                Reset filters
-            </button>
-        </div>
-    `;
-}
-
-function createMenuCard(item, cartQuantity) {
-    return `
-        <article class="menu-card" data-reveal>
-            <div class="card-media">
-                <img
-                    src="${item.image}"
-                    alt="${item.name}"
-                    loading="lazy"
-                    data-fallback="./assets/placeholder-food.svg"
+  const itemsMarkup = items.length
+    ? items
+        .map(
+          (item) => `
+            <article class="menu-card" data-reveal>
+              <div class="menu-card__image-wrap">
+                <img class="menu-card__image" src="${item.image}" alt="${item.name}" loading="lazy" />
+              </div>
+              <div class="menu-card__content">
+                <div class="menu-card__meta">
+                  <span class="menu-card__category">${item.category}</span>
+                  <span class="menu-card__price">₹${item.price}</span>
+                </div>
+                <h3>${item.name}</h3>
+                <p>${item.description}</p>
+                <button
+                  class="button button--small"
+                  type="button"
+                  data-action="add-to-cart"
+                  data-item-id="${item.id}"
                 >
-                <span class="category-badge">${item.category}</span>
-                <span class="tag-badge">${item.tag}</span>
-            </div>
-
-            <div class="card-content">
-                <div class="card-heading">
-                    <div>
-                        <h3>${item.name}</h3>
-                        <p>${item.description}</p>
-                    </div>
-                    <span class="rating-pill">${icons.star}${item.rating}</span>
-                </div>
-
-                <div class="card-meta">
-                    <span class="meta-pill">${icons.clock}${item.prepTime}</span>
-                    <span class="meta-pill">Ready for pickup</span>
-                </div>
-
-                <div class="price-row">
-                    <div class="price-copy">
-                        <strong>${formatCurrency(item.price)}</strong>
-                        <small>${cartQuantity > 0 ? `${cartQuantity} in cart` : "Single serving"}</small>
-                    </div>
-
-                    <button
-                        type="button"
-                        class="card-action ${cartQuantity > 0 ? "is-added" : ""}"
-                        data-action="add-to-cart"
-                        data-item-id="${item.id}"
-                    >
-                        ${icons.plus}
-                        ${cartQuantity > 0 ? "Add one more" : "Add to cart"}
-                    </button>
-                </div>
-            </div>
-        </article>
+                  Add
+                </button>
+              </div>
+            </article>
+          `
+        )
+        .join('')
+    : `
+      <div class="empty-state" data-reveal>
+        <h3>No items found</h3>
+        <p>Try another search term or switch to a different category.</p>
+      </div>
     `;
-}
 
-export function createMenuSection({ categories, activeCategory, query, items, cartMap, isLoading }) {
-    return `
-        <section class="menu-section-shell" id="menu">
-            <div class="section-heading" data-reveal>
-                <div>
-                    <span class="section-label">Curated menu</span>
-                    <h2>Built for quick discovery, not endless scrolling.</h2>
-                </div>
-                <p>
-                    Search dishes, switch categories, and add items instantly with live pricing updates.
-                </p>
-            </div>
+  return `
+    <section class="section section--soft" id="specials">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <span class="section-heading__eyebrow">Today's Specials</span>
+          <h2>Popular picks around campus</h2>
+          <p>Freshly prepared favourites students order the most.</p>
+        </div>
+        <div class="specials-grid">
+          ${specialsMarkup}
+        </div>
+      </div>
+    </section>
 
-            <div class="toolbar-card" data-reveal>
-                <label class="search-field" aria-label="Search menu items">
-                    ${icons.search}
-                    <input
-                        type="search"
-                        value="${query}"
-                        placeholder="Search dosa, coffee, thali..."
-                        data-role="search"
-                    >
-                </label>
+    <section class="section" id="menu">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <span class="section-heading__eyebrow">Menu</span>
+          <h2>Browse everything in one place</h2>
+          <p>Search quickly, switch categories, and add your order in seconds.</p>
+        </div>
 
-                <div class="filter-group" aria-label="Menu categories">
-                    ${categories
-                        .map(
-                            (category) => `
-                                <button
-                                    type="button"
-                                    class="filter-chip ${category === activeCategory ? "is-active" : ""}"
-                                    data-action="set-category"
-                                    data-category="${category}"
-                                >
-                                    ${category}
-                                </button>
-                            `
-                        )
-                        .join("")}
-                </div>
-            </div>
+        <div class="menu-toolbar" data-reveal>
+          <label class="menu-search" for="menu-search">
+            <span class="sr-only">Search menu</span>
+            <input
+              id="menu-search"
+              name="menu-search"
+              type="search"
+              placeholder="Search food or drinks"
+              value="${searchTerm}"
+              data-action="search-menu"
+            />
+          </label>
+          <div class="menu-pills" role="tablist" aria-label="Menu categories">
+            ${categoryMarkup}
+          </div>
+        </div>
 
-            <div class="results-summary">
-                <span>${isLoading ? "Loading menu..." : `${items.length} dishes available`}</span>
-                <span>Pickup only · Frontend demo</span>
-            </div>
-
-            <div class="menu-grid">
-                ${isLoading
-                    ? createSkeletonCards()
-                    : items.length
-                        ? items.map((item) => createMenuCard(item, cartMap.get(item.id) ?? 0)).join("")
-                        : createEmptyState()}
-            </div>
-        </section>
-    `;
+        <div class="menu-grid">
+          ${itemsMarkup}
+        </div>
+      </div>
+    </section>
+  `;
 }

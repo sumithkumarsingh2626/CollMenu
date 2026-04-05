@@ -7,9 +7,9 @@ async function startServer() {
     await connectDatabase();
     await initializeDataStore();
 
-    app.listen(env.port, () => {
-        console.log(`CollMenu backend running at http://127.0.0.1:${env.port}`);
-        console.log(`Storage mode: ${getDatabaseMode()}`);
+app.listen(env.port || 5000, () => {
+        console.log(`Baba Canteen Backend API at http://localhost:${env.port || 5000}`);
+        console.log(`Storage: ${getDatabaseMode()} | Admin login: POST /admin/login`);
     });
 }
 
